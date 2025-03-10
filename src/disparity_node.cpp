@@ -11,8 +11,7 @@
 
 class DisparityNode : public rclcpp::Node {
 public:
-    DisparityNode(const rclcpp::NodeOptions &options = rclcpp::NodeOptions())
-        : Node("disparity_node", options) {
+    DisparityNode() : Node("disparity_node") {
 
         // Ensure correct QoS for sensor messages
         left_image_subscriber.subscribe(this, "/left/image_rect", rmw_qos_profile_sensor_data);
@@ -88,7 +87,7 @@ private:
 
 int main(int argc, char **argv) {
     rclcpp::init(argc, argv);
-    auto node = std::make_shared<DisparityNode>(rclcpp::NodeOptions().use_intra_process_comms(true));
+    auto node = std::make_shared<DisparityNode>();
     rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
