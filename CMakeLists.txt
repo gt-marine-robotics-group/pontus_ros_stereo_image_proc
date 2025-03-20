@@ -12,15 +12,9 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(message_filters REQUIRED)
-find_package(Eigen3 REQUIRED)
-find_package(PCL REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-
-include_directories( ${PCL_INCLUDE_DIRS} )
-add_definitions( ${PCL_DEFINITIONS} )
-link_directories( ${PCL_LIBRARY_DIRS} )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -50,7 +44,6 @@ ament_target_dependencies(disparity_node
   OpenCV
   message_filters
 )
-
 
 install(TARGETS
   image_rectifyer
