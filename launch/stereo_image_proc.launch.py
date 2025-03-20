@@ -57,6 +57,16 @@ def generate_launch_description():
         ),
         Node(
             package='pontus_ros_stereo_image_proc',
+            executable='pointcloud_node.py',
+            name='pointcloud_node',
+            output='screen',
+            remappings=[
+                ('/left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
+                ('/right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+            ]
+        ),
+        Node(
+            package='pontus_ros_stereo_image_proc',
             executable='disparity_node',
             name='disparity_node',
             output='screen',

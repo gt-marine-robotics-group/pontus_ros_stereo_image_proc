@@ -12,9 +12,15 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(message_filters REQUIRED)
+find_package(Eigen3 REQUIRED)
+find_package(PCL REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
+
+include_directories( ${PCL_INCLUDE_DIRS} )
+add_definitions( ${PCL_DEFINITIONS} )
+link_directories( ${PCL_LIBRARY_DIRS} )
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -28,7 +34,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-add_executable(image_rectifyer src/image_rectifyer.cpp)
+add_executable(image_rectifyer pontus_ros_stereo_image_proc/image_rectifyer.cpp)
 ament_target_dependencies(image_rectifyer
   rclcpp
   sensor_msgs
@@ -36,7 +42,7 @@ ament_target_dependencies(image_rectifyer
   OpenCV
 )
 
-add_executable(disparity_node src/disparity_node.cpp)
+add_executable(disparity_node pontus_ros_stereo_image_proc/disparity_node.cpp)
 ament_target_dependencies(disparity_node
   rclcpp
   sensor_msgs
@@ -45,9 +51,19 @@ ament_target_dependencies(disparity_node
   message_filters
 )
 
+
 install(TARGETS
   image_rectifyer
   disparity_node
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+ament_python_install_package(${PROJECT_NAME})
+
+# Uncomment this to add new python nodes
+install(PROGRAMS
+  # add python executable file paths here
+  pontus_ros_stereo_image_proc/pointcloud_node.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

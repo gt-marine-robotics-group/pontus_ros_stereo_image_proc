@@ -21,7 +21,7 @@ public:
             message_filters::sync_policies::ApproximateTime<sensor_msgs::msg::Image, sensor_msgs::msg::Image>(10),
             left_image_subscriber, right_image_subscriber
         );
-        sync->setAgePenalty(0.5);
+        sync->setAgePenalty(0);
         sync->registerCallback(std::bind(&DisparityNode::camera_callback, this, std::placeholders::_1, std::placeholders::_2));
 
         disparity_pubisher = this->create_publisher<sensor_msgs::msg::Image>(
@@ -67,7 +67,7 @@ private:
         cv::Mat disparity;
         d_disparity.download(disparity);
         sensor_msgs::msg::Image::SharedPtr msg = cv_bridge::CvImage(
-            std_msgs::msg::Header(),
+            left_image->header,
             "mono8",
             disparity).toImageMsg();
         disparity_pubisher->publish(*msg);
