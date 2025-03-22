@@ -37,7 +37,7 @@ class Pointcloud(Node):
 
         self.point_cloud_pub = self.create_publisher(
             PointCloud2,
-            '/points',
+            '/points2',
             10
         )
 
