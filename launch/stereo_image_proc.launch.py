@@ -44,46 +44,46 @@ def generate_launch_description():
                 ('/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
                 ('/image_rect_color', [LaunchConfiguration('left_namespace'), '/image_rect_color'])]
         ),
-        Node(
-            package='pontus_ros_stereo_image_proc',
-            executable='image_rectifyer',
-            name='image_rectifyer_node',
-            output='screen',
-            remappings=[
-                ('/image_raw', [LaunchConfiguration('right_namespace'), '/image_raw']),
-                ('/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
-                ('/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),
-                ('/image_rect_color', [LaunchConfiguration('right_namespace'), '/image_rect_color'])]
-        ),
-        Node(
-            package='pontus_ros_stereo_image_proc',
-            executable='pointcloud_node.py',
-            name='pointcloud_node',
-            output='screen',
-            remappings=[
-                ('/left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
-                ('/right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
-            ]
-        ),
-        Node(
-            package='pontus_ros_stereo_image_proc',
-            executable='disparity_node',
-            name='disparity_node',
-            output='screen',
-            remappings=[
-                ('/left/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
-                ('/right/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),   
-            ],
-            parameters=[{
-                'num_disparities' : LaunchConfiguration('num_disparities'),
-                'window_size' : LaunchConfiguration('window_size'),
-                'prefilter_cap' : LaunchConfiguration('prefilter_cap'),
-                'texture_threshold' : LaunchConfiguration('texture_threshold'),
-                'uniqueness_ratio' : LaunchConfiguration('uniqueness_ratio'),
-                'speckle_window_size' : LaunchConfiguration('speckle_window_size'),
-                'speckle_range' : LaunchConfiguration('speckle_range'),
-            }]
-        ),
+        # Node(
+        #     package='pontus_ros_stereo_image_proc',
+        #     executable='image_rectifyer',
+        #     name='image_rectifyer_node',
+        #     output='screen',
+        #     remappings=[
+        #         ('/image_raw', [LaunchConfiguration('right_namespace'), '/image_raw']),
+        #         ('/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+        #         ('/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),
+        #         ('/image_rect_color', [LaunchConfiguration('right_namespace'), '/image_rect_color'])]
+        # ),
+        # Node(
+        #     package='pontus_ros_stereo_image_proc',
+        #     executable='pointcloud_node.py',
+        #     name='pointcloud_node',
+        #     output='screen',
+        #     remappings=[
+        #         ('/left/camera_info', [LaunchConfiguration('left_namespace'), '/camera_info']),
+        #         ('/right/camera_info', [LaunchConfiguration('right_namespace'), '/camera_info']),
+        #     ]
+        # ),
+        # Node(
+        #     package='pontus_ros_stereo_image_proc',
+        #     executable='disparity_node',
+        #     name='disparity_node',
+        #     output='screen',
+        #     remappings=[
+        #         ('/left/image_rect', [LaunchConfiguration('left_namespace'), '/image_rect']),
+        #         ('/right/image_rect', [LaunchConfiguration('right_namespace'), '/image_rect']),   
+        #     ],
+        #     parameters=[{
+        #         'num_disparities' : LaunchConfiguration('num_disparities'),
+        #         'window_size' : LaunchConfiguration('window_size'),
+        #         'prefilter_cap' : LaunchConfiguration('prefilter_cap'),
+        #         'texture_threshold' : LaunchConfiguration('texture_threshold'),
+        #         'uniqueness_ratio' : LaunchConfiguration('uniqueness_ratio'),
+        #         'speckle_window_size' : LaunchConfiguration('speckle_window_size'),
+        #         'speckle_range' : LaunchConfiguration('speckle_range'),
+        #     }]
+        # ),
     ])
 """
 num_disparities (int) :

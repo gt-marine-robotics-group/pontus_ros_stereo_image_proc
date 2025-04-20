@@ -1,7 +1,7 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <sensor_msgs/msg/camera_info.hpp>
-#include <cv_bridge/cv_bridge.hpp>
+#include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
 #include <opencv2/cudaimgproc.hpp> 
 #include <opencv2/cudawarping.hpp>
@@ -41,7 +41,7 @@ private:
             return;
         }
         cv_bridge::CvImagePtr cv_ptr;
-        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+        cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::RGB8);
 
         cv::cuda::GpuMat gpu_undisorted;
         // Upload image to gpu
@@ -61,13 +61,14 @@ private:
 
         // Convert to gray scale
         cv::Mat grayscale_image;
-        cv::cvtColor(undistorted_image, grayscale_image, cv::COLOR_BGR2GRAY);
-        
+        cv::cvtColor(undistorted_image, grayscale_image, cv::COLOR_RGB2GRAY);
+        cv::Mat bgr;
+        cv::cvtColor(undistorted_image, bgr, cv::COLOR_RGB2BGR);
         // Publish to /image_rect_color
         cv_bridge::CvImagePtr out_cv_ptr_color = std::make_shared<cv_bridge::CvImage>();
         out_cv_ptr_color->header = msg->header;
         out_cv_ptr_color->encoding = sensor_msgs::image_encodings::BGR8;
-        out_cv_ptr_color->image = undistorted_image;
+        out_cv_ptr_color->image = bgr;
         
         image_rect_color_publisher->publish(std::make_unique<sensor_msgs::msg::Image>(*out_cv_ptr_color->toImageMsg()));
 
